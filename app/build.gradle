@@ -50,6 +50,8 @@ dependencies {
 
     // Dependencies for MVVM
 
+    // Activity
+    implementation "androidx.activity:activity-ktx:1.4.0"
     // ViewModel
     implementation "androidx.lifecycle:lifecycle-viewmodel-ktx:$lifecycle_version"
     // LiveData
