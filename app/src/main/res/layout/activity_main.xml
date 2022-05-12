@@ -33,9 +33,25 @@
             android:id="@+id/tv_notes"
             android:layout_width="match_parent"
             android:layout_height="55dp"
-            android:layout_marginBottom="336dp"
+            android:layout_marginBottom="20dp"
             android:text="notes"
             android:textSize="24sp" />
+
+        <TextView
+            android:id="@+id/textView"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="#03A9F4"
+            android:text="Task List"
+            android:textColor="#FCFCFC"
+            android:textSize="24sp"
+            android:textStyle="bold" />
+
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/rv_taskList"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_marginTop="10dp" />
     </LinearLayout>
 
 </LinearLayout>
