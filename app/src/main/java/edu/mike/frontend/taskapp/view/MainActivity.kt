@@ -3,16 +3,20 @@ package edu.mike.frontend.taskapp.view
 import android.os.Bundle
 import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
+import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
 import edu.mike.frontend.taskapp.adapter.TaskAdapter
 import edu.mike.frontend.taskapp.databinding.ActivityMainBinding
+import edu.mike.frontend.taskapp.repository.MainRepository
+import edu.mike.frontend.taskapp.service.MainService
 import edu.mike.frontend.taskapp.viewmodel.TaskViewModel
+import edu.mike.frontend.taskapp.viewmodel.ViewModelFactory
 
 class MainActivity : AppCompatActivity() {
 
     // Definition of the binding variable
-    private lateinit var binding : ActivityMainBinding
-    private val taskViewModel: TaskViewModel by viewModels()
+    private lateinit var binding: ActivityMainBinding
+    private lateinit var taskViewModel: TaskViewModel
 
     // We need an adapter to connect with the recycle view
     private val adapter = TaskAdapter()
@@ -30,6 +34,15 @@ class MainActivity : AppCompatActivity() {
 
         // Old way without View Binding
         //setContentView(R.layout.activity_main)
+
+        // Retrofit Service
+        val mainService = MainService.getInstance()
+        val mainRepository = MainRepository(mainService)
+
+        // ViewModelFactory
+        taskViewModel =
+            ViewModelProvider(this, ViewModelFactory(mainRepository))
+                .get(TaskViewModel::class.java)
 
         // Observer method to bind data of task into text views
         taskViewModel.task.observe(this) {

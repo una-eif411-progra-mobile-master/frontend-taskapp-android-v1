@@ -1,4 +1,9 @@
 package edu.mike.frontend.taskapp.repository
 
-class MainRepository {
+import edu.mike.frontend.taskapp.service.MainService
+
+class MainRepository constructor(
+    private val mainService: MainService
+){
+    suspend fun getAllTask() = mainService.getAllTasks()
 }
