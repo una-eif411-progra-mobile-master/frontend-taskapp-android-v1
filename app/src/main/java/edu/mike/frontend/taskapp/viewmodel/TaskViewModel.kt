@@ -3,7 +3,6 @@ package edu.mike.frontend.taskapp.viewmodel
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import edu.mike.frontend.taskapp.model.Task
-import edu.mike.frontend.taskapp.model.TaskProvider
 import edu.mike.frontend.taskapp.repository.MainRepository
 import kotlinx.coroutines.*
 
@@ -22,9 +21,19 @@ class TaskViewModel constructor(
     }
 
     fun getTask() {
-        val position = (0..9).random()
-        val _task = TaskProvider.findTaskById(position)
-        task.postValue(_task)
+        job = CoroutineScope(Dispatchers.IO + exceptionHandler).launch {
+            loading.postValue(true)
+            val position : Int = (1..49).random()
+            val response = mainRepository.getTaskById(position.toLong())
+            withContext(Dispatchers.Main) {
+                if (response.isSuccessful) {
+                    task.postValue(response.body())
+                    loading.value = false
+                } else {
+                    onError("Error : ${response.message()}")
+                }
+            }
+        }
     }
 
     fun findAllTask() {

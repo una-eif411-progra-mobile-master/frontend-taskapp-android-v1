@@ -4,11 +4,15 @@ import retrofit2.http.GET
 import edu.mike.frontend.taskapp.model.Task
 import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
+import retrofit2.http.Path
 
 interface MainService {
 
     @GET("api/v1/tasks")
     suspend fun getAllTasks() : Response<List<Task>>
+
+    @GET("api/v1/tasks/{id}")
+    suspend fun getTaskById(@Path("id") id: Long) : Response<Task>
 
     companion object{
         var mainService : MainService? = null
