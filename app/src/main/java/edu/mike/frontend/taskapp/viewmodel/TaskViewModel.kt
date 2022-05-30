@@ -20,6 +20,11 @@ class TaskViewModel constructor(
         onError("Exception handled: ${throwable.localizedMessage}")
     }
 
+    /**
+     * When we call getTask() suspend method, then it suspends our coroutine.
+     * The coroutine on the main thread will be resumed with the result as soon as the
+     * withContext block is complete.
+     */
     fun getTask() {
         job = CoroutineScope(Dispatchers.IO + exceptionHandler).launch {
             loading.postValue(true)
@@ -36,6 +41,11 @@ class TaskViewModel constructor(
         }
     }
 
+    /**
+     * When we call findAllTask() suspend method, then it suspends our coroutine.
+     * The coroutine on the main thread will be resumed with the result as soon as the
+     * withContext block is complete.
+     */
     fun findAllTask() {
         job = CoroutineScope(Dispatchers.IO + exceptionHandler).launch {
             loading.postValue(true)

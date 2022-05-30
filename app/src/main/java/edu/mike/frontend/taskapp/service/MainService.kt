@@ -14,6 +14,10 @@ interface MainService {
     @GET("api/v1/tasks/{id}")
     suspend fun getTaskById(@Path("id") id: Long) : Response<Task>
 
+    /*
+     * Function or any member of the class that can be called without having the instance of the
+     * class then you can write the same as a member of a companion object inside the class
+     */
     companion object{
         var mainService : MainService? = null
         fun getInstance() : MainService {
