@@ -1,18 +1,15 @@
 package edu.mike.frontend.taskapp.view
 
 import android.os.Bundle
-import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
 import edu.mike.frontend.taskapp.adapter.TaskAdapter
 import edu.mike.frontend.taskapp.databinding.ActivityMainBinding
-import edu.mike.frontend.taskapp.repository.MainRepository
-import edu.mike.frontend.taskapp.service.MainService
 import edu.mike.frontend.taskapp.viewmodel.TaskViewModel
-import edu.mike.frontend.taskapp.viewmodel.ViewModelFactory
+import edu.mike.frontend.taskapp.viewmodel.TaskViewModelFactory
 
-class MainActivity : AppCompatActivity() {
+class TaskActivity : AppCompatActivity() {
 
     // Definition of the binding variable
     private lateinit var binding: ActivityMainBinding
@@ -35,13 +32,9 @@ class MainActivity : AppCompatActivity() {
         // Old way without View Binding
         //setContentView(R.layout.activity_main)
 
-        // Retrofit Service
-        val mainService = MainService.getInstance()
-        val mainRepository = MainRepository(mainService)
-
         // ViewModelFactory
         taskViewModel =
-            ViewModelProvider(this, ViewModelFactory(mainRepository))
+            ViewModelProvider(this, TaskViewModelFactory())
                 .get(TaskViewModel::class.java)
 
         // Observer method to bind data of task into text views
