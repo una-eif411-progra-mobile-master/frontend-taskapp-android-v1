@@ -1,4 +1,4 @@
-package edu.mike.frontend.taskapp.misc
+package edu.mike.frontend.taskapp.common
 
 import android.content.Context
 import android.content.SharedPreferences
@@ -8,7 +8,8 @@ import edu.mike.frontend.taskapp.R
  * Session manager to save and fetch data from SharedPreferences
  */
 class SessionManager (context: Context) {
-    private var prefs: SharedPreferences = context.getSharedPreferences(context.getString(R.string.app_name), Context.MODE_PRIVATE)
+    private var prefs: SharedPreferences = context.getSharedPreferences(
+        context.getString(R.string.app_name), Context.MODE_PRIVATE)
 
     companion object {
         const val USER_TOKEN = "user_token"
@@ -28,5 +29,14 @@ class SessionManager (context: Context) {
      */
     fun fetchAuthToken(): String? {
         return prefs.getString(USER_TOKEN, null)
+    }
+
+    /**
+     * Function to delete auth token
+     */
+    fun deleteAuthToken() {
+        val editor = prefs.edit()
+        editor.remove (USER_TOKEN)
+        editor.commit()
     }
 }

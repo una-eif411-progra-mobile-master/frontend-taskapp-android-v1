@@ -1,4 +1,4 @@
-package edu.mike.frontend.taskapp.misc
+package edu.mike.frontend.taskapp.common
 
 import android.content.Context
 import okhttp3.Interceptor
