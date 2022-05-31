@@ -29,7 +29,7 @@ class TaskViewModel constructor(
         job = CoroutineScope(Dispatchers.IO + exceptionHandler).launch {
             loading.postValue(true)
             val position : Int = (1..49).random()
-            val response = taskRepository.getTaskById(position.toLong())
+            val response = taskRepository.getTaskById(position.toLong(),"Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzUxMiJ9.eyJpc3MiOiJzZWN1cmUtYXBpIiwiYXVkIjoic2VjdXJlLWFwcCIsInN1YiI6InVzZXJAZ3V6bWFuYWxhbi5jb20iLCJleHAiOjE2NTQ4NDMxNDV9.EtaSw0rrgF8Xa5mW1EQxBYzuTDb1LRADv6OXQZdZN-1_f_YQMGVVbNOIhEgEJzArmRdk8lkUVTyQMpsk0QxHcA")
             withContext(Dispatchers.Main) {
                 if (response.isSuccessful) {
                     task.postValue(response.body())
@@ -49,7 +49,7 @@ class TaskViewModel constructor(
     fun findAllTask() {
         job = CoroutineScope(Dispatchers.IO + exceptionHandler).launch {
             loading.postValue(true)
-            val response = taskRepository.getAllTask()
+            val response = taskRepository.getAllTask("Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzUxMiJ9.eyJpc3MiOiJzZWN1cmUtYXBpIiwiYXVkIjoic2VjdXJlLWFwcCIsInN1YiI6InVzZXJAZ3V6bWFuYWxhbi5jb20iLCJleHAiOjE2NTQ4NDMxNDV9.EtaSw0rrgF8Xa5mW1EQxBYzuTDb1LRADv6OXQZdZN-1_f_YQMGVVbNOIhEgEJzArmRdk8lkUVTyQMpsk0QxHcA")
             withContext(Dispatchers.Main) {
                 if (response.isSuccessful) {
                     taskList.postValue(response.body())

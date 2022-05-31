@@ -1,17 +1,13 @@
 package edu.mike.frontend.taskapp.model
 
-data class LoginInput(
+import com.google.gson.annotations.SerializedName
+
+data class LoginRequest(
     var username: String,
     var password: String,
 )
 
-data class LoginFormState (
-    val usernameError: Int? = null,
-    val passwordError: Int? = null,
-    val isDataValid: Boolean = false
-)
-
-data class LoginResult(
+data class LoginResponse(
     var username: String,
     var password: String,
     var authorities: List<Authority>,

@@ -32,7 +32,7 @@ class TaskActivity : AppCompatActivity() {
         // Old way without View Binding
         //setContentView(R.layout.activity_main)
 
-        // ViewModelFactory
+        // TaskViewModelFactory
         taskViewModel =
             ViewModelProvider(this, TaskViewModelFactory())
                 .get(TaskViewModel::class.java)

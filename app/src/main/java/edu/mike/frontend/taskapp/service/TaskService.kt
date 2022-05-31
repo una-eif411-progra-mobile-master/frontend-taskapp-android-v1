@@ -1,19 +1,17 @@
 package edu.mike.frontend.taskapp.service
-import edu.mike.frontend.taskapp.BuildConfig
+import edu.mike.frontend.taskapp.model.Task
 import retrofit2.Response
 import retrofit2.http.GET
-import edu.mike.frontend.taskapp.model.Task
-import retrofit2.Retrofit
-import retrofit2.converter.gson.GsonConverterFactory
 import retrofit2.http.Path
+import retrofit2.http.Header
 
 interface TaskService {
 
-    @GET("api/v1/tasks")
-    suspend fun getAllTasks() : Response<List<Task>>
+    @GET("v1/tasks")
+    suspend fun getAllTasks(@Header("Authorization") authHeader:String) : Response<List<Task>>
 
-    @GET("api/v1/tasks/{id}")
-    suspend fun getTaskById(@Path("id") id: Long) : Response<Task>
+    @GET("v1/tasks/{id}")
+    suspend fun getTaskById(@Path("id") id: Long, @Header("Authorization") authHeader:String) : Response<Task>
 
     /*
      * Function or any member of the class that can be called without having the instance of the

@@ -17,7 +17,8 @@ android {
 
         // Custom properties
         buildConfigField "String", "API_KEY", "\"my_api_key\""
-        buildConfigField "String", "BASE_URL", "\"https://628ae68e667aea3a3e23e474.mockapi.io/\""
+        //buildConfigField "String", "BASE_URL", "\"https://628ae68e667aea3a3e23e474.mockapi.io/api/\""
+        buildConfigField "String", "BASE_URL", "\"https://desolate-bayou-55623.herokuapp.com/\""
     }
 
     buildTypes {
