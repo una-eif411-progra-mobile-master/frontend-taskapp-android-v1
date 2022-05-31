@@ -30,7 +30,7 @@ data class LoggedInUserView(
     //... other data fields that may be accessible to the UI
 )
 
-data class LoginResponse(
+data class UserLoginResponse(
     var username: String,
     var password: String,
     var authorities: List<Authority>,

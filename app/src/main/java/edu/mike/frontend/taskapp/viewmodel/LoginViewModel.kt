@@ -13,9 +13,9 @@ class LoginViewModel constructor(
     private val loginRepository: LoginRepository,
 ) : ViewModel(){
 
-    var job: Job? = null
-    val errorMessage = MutableLiveData<String>()
-    val loading = MutableLiveData<Boolean>()
+    private var job: Job? = null
+    private val errorMessage = MutableLiveData<String>()
+    private val loading = MutableLiveData<Boolean>()
 
     private val _loginForm = MutableLiveData<LoginFormState>()
     val loginFormState: LiveData<LoginFormState> = _loginForm
