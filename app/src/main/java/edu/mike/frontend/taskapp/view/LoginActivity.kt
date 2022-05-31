@@ -33,7 +33,7 @@ class LoginActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
 
         // With View Binding
-        binding= ActivityLoginBinding.inflate(layoutInflater)
+        binding = ActivityLoginBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
         val username = binding.username
@@ -45,8 +45,7 @@ class LoginActivity : AppCompatActivity() {
 
         // LoginViewModelFactory
         loginViewModel =
-            ViewModelProvider(this, LoginViewModelFactory())
-                .get(LoginViewModel::class.java)
+            ViewModelProvider(this, LoginViewModelFactory())[LoginViewModel::class.java]
 
         loginViewModel.loginFormState.observe(this@LoginActivity, Observer {
             val loginState = it ?: return@Observer
@@ -78,28 +77,33 @@ class LoginActivity : AppCompatActivity() {
             finish()
         })
 
-
         username.afterTextChanged {
-            loginViewModel.loginDataChanged(LoginRequest(
-                username=username.text.toString(),
-                password = password.text.toString())
+            loginViewModel.loginDataChanged(
+                LoginRequest(
+                    username = username.text.toString(),
+                    password = password.text.toString()
+                )
             )
         }
 
         password.apply {
             afterTextChanged {
-                loginViewModel.loginDataChanged(LoginRequest(
-                    username=username.text.toString(),
-                    password = password.text.toString())
+                loginViewModel.loginDataChanged(
+                    LoginRequest(
+                        username = username.text.toString(),
+                        password = password.text.toString()
+                    )
                 )
             }
 
             setOnEditorActionListener { _, actionId, _ ->
                 when (actionId) {
                     EditorInfo.IME_ACTION_DONE ->
-                        loginViewModel.login(LoginRequest(
-                            username=username.text.toString(),
-                            password = password.text.toString())
+                        loginViewModel.login(
+                            LoginRequest(
+                                username = username.text.toString(),
+                                password = password.text.toString()
+                            )
                         )
                 }
                 false
@@ -107,15 +111,20 @@ class LoginActivity : AppCompatActivity() {
 
             login.setOnClickListener {
                 loading.visibility = View.VISIBLE
-                loginViewModel.login(LoginRequest(
-                    username=username.text.toString(),
-                    password = password.text.toString())
+                loginViewModel.login(
+                    LoginRequest(
+                        username = username.text.toString(),
+                        password = password.text.toString()
+                    )
                 )
             }
         }
 
     }
 
+    /**
+     * Success login to redirect the app to the next Screen
+     */
     private fun updateUiWithUser(model: LoggedInUserView) {
         val welcome = getString(R.string.welcome)
         val username = model.username
@@ -131,6 +140,9 @@ class LoginActivity : AppCompatActivity() {
         ).show()
     }
 
+    /**
+     * Unsuccessful login
+     */
     private fun showLoginFailed(@StringRes errorString: Int) {
         Toast.makeText(applicationContext, errorString, Toast.LENGTH_SHORT).show()
     }
