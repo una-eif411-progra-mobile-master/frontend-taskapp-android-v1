@@ -3,15 +3,14 @@ import edu.mike.frontend.taskapp.model.Task
 import retrofit2.Response
 import retrofit2.http.GET
 import retrofit2.http.Path
-import retrofit2.http.Header
 
 interface TaskService {
 
     @GET("v1/tasks")
-    suspend fun getAllTasks(@Header("Authorization") authHeader:String) : Response<List<Task>>
+    suspend fun getAllTasks() : Response<List<Task>>
 
     @GET("v1/tasks/{id}")
-    suspend fun getTaskById(@Path("id") id: Long, @Header("Authorization") authHeader:String) : Response<Task>
+    suspend fun getTaskById(@Path("id") id: Long) : Response<Task>
 
     /*
      * Function or any member of the class that can be called without having the instance of the

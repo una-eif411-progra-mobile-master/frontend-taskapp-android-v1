@@ -41,6 +41,10 @@ class LoginViewModel constructor(
         }
     }
 
+    fun logout() {
+        loginRepository.logout()
+    }
+
     fun loginDataChanged(loginRequest: LoginRequest) {
         if (!isUserNameValid(loginRequest.username)) {
             _loginForm.value = LoginFormState(usernameError = R.string.invalid_username)

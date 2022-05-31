@@ -1,6 +1,7 @@
 package edu.mike.frontend.taskapp.service
 
 import edu.mike.frontend.taskapp.BuildConfig
+import edu.mike.frontend.taskapp.common.AuthorizationInterceptor
 import okhttp3.OkHttpClient
 import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
@@ -11,7 +12,7 @@ import retrofit2.converter.gson.GsonConverterFactory
  */
 object ServiceBuilder {
     private val client =
-        OkHttpClient.Builder().build()
+        OkHttpClient.Builder().addInterceptor(AuthorizationInterceptor()).build()
 
     private val retrofit = Retrofit.Builder()
         .baseUrl(BuildConfig.BASE_URL) // change this IP for testing by your actual machine IP

@@ -12,9 +12,10 @@ class TaskViewModel constructor(
 
     val task =  MutableLiveData<Task>()
     val taskList = MutableLiveData<List<Task>>()
-    val errorMessage = MutableLiveData<String>()
-    val loading = MutableLiveData<Boolean>()
     var job: Job? = null
+
+    private val errorMessage = MutableLiveData<String>()
+    private val loading = MutableLiveData<Boolean>()
 
     private val exceptionHandler = CoroutineExceptionHandler { _, throwable ->
         onError("Exception handled: ${throwable.localizedMessage}")
@@ -28,8 +29,8 @@ class TaskViewModel constructor(
     fun getTask() {
         job = CoroutineScope(Dispatchers.IO + exceptionHandler).launch {
             loading.postValue(true)
-            val position : Int = (1..49).random()
-            val response = taskRepository.getTaskById(position.toLong(),"Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzUxMiJ9.eyJpc3MiOiJzZWN1cmUtYXBpIiwiYXVkIjoic2VjdXJlLWFwcCIsInN1YiI6InVzZXJAZ3V6bWFuYWxhbi5jb20iLCJleHAiOjE2NTQ4NDMxNDV9.EtaSw0rrgF8Xa5mW1EQxBYzuTDb1LRADv6OXQZdZN-1_f_YQMGVVbNOIhEgEJzArmRdk8lkUVTyQMpsk0QxHcA")
+            val position : Int = (1..2).random()
+            val response = taskRepository.getTaskById(position.toLong())
             withContext(Dispatchers.Main) {
                 if (response.isSuccessful) {
                     task.postValue(response.body())
@@ -49,7 +50,7 @@ class TaskViewModel constructor(
     fun findAllTask() {
         job = CoroutineScope(Dispatchers.IO + exceptionHandler).launch {
             loading.postValue(true)
-            val response = taskRepository.getAllTask("Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzUxMiJ9.eyJpc3MiOiJzZWN1cmUtYXBpIiwiYXVkIjoic2VjdXJlLWFwcCIsInN1YiI6InVzZXJAZ3V6bWFuYWxhbi5jb20iLCJleHAiOjE2NTQ4NDMxNDV9.EtaSw0rrgF8Xa5mW1EQxBYzuTDb1LRADv6OXQZdZN-1_f_YQMGVVbNOIhEgEJzArmRdk8lkUVTyQMpsk0QxHcA")
+            val response = taskRepository.getAllTask()
             withContext(Dispatchers.Main) {
                 if (response.isSuccessful) {
                     taskList.postValue(response.body())

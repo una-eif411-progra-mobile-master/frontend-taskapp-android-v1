@@ -1,6 +1,7 @@
 package edu.mike.frontend.taskapp.view
 
 import android.app.Activity
+import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.text.Editable
@@ -112,11 +113,17 @@ class LoginActivity : AppCompatActivity() {
                 )
             }
         }
+
     }
+
     private fun updateUiWithUser(model: LoggedInUserView) {
         val welcome = getString(R.string.welcome)
         val username = model.username
-        // TODO : initiate successful logged in experience
+
+        // Initiate successful logged in experience
+        val intent = Intent(this, TaskActivity::class.java)
+        startActivity(intent)
+
         Toast.makeText(
             applicationContext,
             "$welcome $username",

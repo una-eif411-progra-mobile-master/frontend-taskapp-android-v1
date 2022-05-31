@@ -5,14 +5,14 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
 import edu.mike.frontend.taskapp.adapter.TaskAdapter
-import edu.mike.frontend.taskapp.databinding.ActivityMainBinding
+import edu.mike.frontend.taskapp.databinding.ActivityTaskBinding
 import edu.mike.frontend.taskapp.viewmodel.TaskViewModel
 import edu.mike.frontend.taskapp.viewmodel.TaskViewModelFactory
 
 class TaskActivity : AppCompatActivity() {
 
     // Definition of the binding variable
-    private lateinit var binding: ActivityMainBinding
+    private lateinit var binding: ActivityTaskBinding
     private lateinit var taskViewModel: TaskViewModel
 
     // We need an adapter to connect with the recycle view
@@ -22,15 +22,14 @@ class TaskActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
 
         // With View Binding
-        binding = ActivityMainBinding.inflate(layoutInflater)
+        binding = ActivityTaskBinding.inflate(layoutInflater)
         setContentView(binding.root)
+
+        val screen = binding.viewContainer
 
         // Connect the recycler view with the adapter
         binding.rvTaskList.layoutManager = LinearLayoutManager(this)
         binding.rvTaskList.adapter = adapter
-
-        // Old way without View Binding
-        //setContentView(R.layout.activity_main)
 
         // TaskViewModelFactory
         taskViewModel =
@@ -44,7 +43,7 @@ class TaskActivity : AppCompatActivity() {
         }
 
         // Listener when the user click the screen container
-        binding.viewContainer.setOnClickListener {
+        screen.setOnClickListener {
             taskViewModel.getTask()
         }
 

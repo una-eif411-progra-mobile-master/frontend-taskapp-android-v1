@@ -1,14 +1,13 @@
 package edu.mike.frontend.taskapp.common
 
-import android.content.Context
 import okhttp3.Interceptor
 import okhttp3.Response
 
 /**
  * Interceptor to add auth token to requests
  */
-class AuthInterceptor(context: Context) : Interceptor {
-    private val sessionManager = SessionManager(context)
+class AuthorizationInterceptor() : Interceptor {
+    private var sessionManager: SessionManager = SessionManager(MyApplication.appContext!!)
 
     override fun intercept(chain: Interceptor.Chain): Response {
         val requestBuilder = chain.request().newBuilder()
