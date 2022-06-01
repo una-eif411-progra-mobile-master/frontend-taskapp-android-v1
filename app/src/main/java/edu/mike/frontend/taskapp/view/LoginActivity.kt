@@ -16,7 +16,7 @@ import androidx.lifecycle.ViewModelProvider
 import edu.mike.frontend.taskapp.R
 import edu.mike.frontend.taskapp.databinding.ActivityLoginBinding
 import edu.mike.frontend.taskapp.model.LoginRequest
-import edu.mike.frontend.taskapp.common.SessionManager
+import edu.mike.frontend.taskapp.utils.SessionManager
 import edu.mike.frontend.taskapp.model.LoggedInUserView
 import edu.mike.frontend.taskapp.viewmodel.LoginViewModel
 import edu.mike.frontend.taskapp.viewmodel.LoginViewModelFactory

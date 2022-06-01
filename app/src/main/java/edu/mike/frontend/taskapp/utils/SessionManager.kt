@@ -1,4 +1,4 @@
-package edu.mike.frontend.taskapp.common
+package edu.mike.frontend.taskapp.utils
 
 import android.content.Context
 import android.content.SharedPreferences
@@ -37,6 +37,6 @@ class SessionManager (context: Context) {
     fun deleteAuthToken() {
         val editor = prefs.edit()
         editor.remove (USER_TOKEN)
-        editor.commit()
+        editor.apply()
     }
 }

@@ -1,17 +1,14 @@
 package edu.mike.frontend.taskapp.repository
 
-import edu.mike.frontend.taskapp.common.MyApplication
-import edu.mike.frontend.taskapp.common.SessionManager
 import edu.mike.frontend.taskapp.model.LoginRequest
 import edu.mike.frontend.taskapp.model.UserLoginResponse
 import edu.mike.frontend.taskapp.service.LoginService
+import edu.mike.frontend.taskapp.utils.MyApplication.Companion.sessionManager
 import retrofit2.Response
 
 class LoginRepository constructor (
     private val loginService: LoginService
     ){
-
-    private var sessionManager: SessionManager = SessionManager(MyApplication.appContext!!)
 
     // in-memory cache of the loggedInUser object
     private var user: UserLoginResponse? = null
@@ -27,7 +24,7 @@ class LoginRepository constructor (
 
     fun logout() {
         user = null
-        sessionManager.deleteAuthToken()
+        sessionManager?.deleteAuthToken()
     }
 
     suspend fun login(userLogin: LoginRequest)  : Response<UserLoginResponse> {
@@ -42,7 +39,7 @@ class LoginRepository constructor (
 
     private fun setLoggedInUser(loginRequest: UserLoginResponse?, token:String) {
         this.user = loginRequest
-        sessionManager.saveAuthToken(token)
+        sessionManager?.saveAuthToken(token)
 
         // If user credentials will be cached in local storage, it is recommended it be encrypted
         // @see https://developer.android.com/training/articles/keystore
