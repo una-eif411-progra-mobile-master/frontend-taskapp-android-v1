@@ -25,16 +25,13 @@ class TaskActivity : AppCompatActivity() {
         binding = ActivityTaskBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
-        val screen = binding.viewContainer
-
         // Connect the recycler view with the adapter
         binding.rvTaskList.layoutManager = LinearLayoutManager(this)
         binding.rvTaskList.adapter = adapter
 
         // TaskViewModelFactory
         taskViewModel =
-            ViewModelProvider(this, TaskViewModelFactory())
-                .get(TaskViewModel::class.java)
+            ViewModelProvider(this, TaskViewModelFactory())[TaskViewModel::class.java]
 
         // Observer method to bind data of task into text views
         taskViewModel.task.observe(this) {
@@ -43,7 +40,7 @@ class TaskActivity : AppCompatActivity() {
         }
 
         // Listener when the user click the screen container
-        screen.setOnClickListener {
+        binding.viewContainer.setOnClickListener {
             taskViewModel.getTask()
         }
 

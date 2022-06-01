@@ -12,8 +12,8 @@ class TaskViewModel constructor(
 
     val task =  MutableLiveData<Task>()
     val taskList = MutableLiveData<List<Task>>()
-    var job: Job? = null
 
+    private var job: Job? = null
     private val errorMessage = MutableLiveData<String>()
     private val loading = MutableLiveData<Boolean>()
 

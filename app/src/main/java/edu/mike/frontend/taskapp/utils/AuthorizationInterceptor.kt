@@ -7,7 +7,7 @@ import okhttp3.Response
 /**
  * Interceptor to add auth token to requests
  */
-class AuthorizationInterceptor() : Interceptor {
+class AuthorizationInterceptor : Interceptor {
 
     override fun intercept(chain: Interceptor.Chain): Response {
         val requestBuilder = chain.request().newBuilder()

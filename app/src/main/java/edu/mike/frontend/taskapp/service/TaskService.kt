@@ -17,7 +17,7 @@ interface TaskService {
      * class then you can write the same as a member of a companion object inside the class
      */
     companion object{
-        var taskService : TaskService? = null
+        private var taskService : TaskService? = null
         fun getInstance() : TaskService {
             if (taskService == null) {
                 taskService = ServiceBuilder.buildService(TaskService::class.java)
