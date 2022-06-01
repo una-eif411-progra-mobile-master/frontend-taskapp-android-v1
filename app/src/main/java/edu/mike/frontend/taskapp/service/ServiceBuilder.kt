@@ -1,7 +1,7 @@
 package edu.mike.frontend.taskapp.service
 
 import edu.mike.frontend.taskapp.BuildConfig
-import edu.mike.frontend.taskapp.common.AuthorizationInterceptor
+import edu.mike.frontend.taskapp.utils.AuthorizationInterceptor
 import okhttp3.OkHttpClient
 import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory

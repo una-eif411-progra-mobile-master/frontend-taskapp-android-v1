@@ -8,7 +8,7 @@ import edu.mike.frontend.taskapp.model.Task
 
 class TaskAdapter : RecyclerView.Adapter<MainViewHolder>(){
 
-    var tasks = mutableListOf<Task>()
+    private var tasks = mutableListOf<Task>()
 
     fun setTaskList(tasks: List<Task>) {
         this.tasks = tasks.toMutableList()

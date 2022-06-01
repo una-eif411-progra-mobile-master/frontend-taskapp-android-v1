@@ -12,7 +12,7 @@ interface LoginService {
     suspend fun login(@Body userLogin: LoginRequest) : Response<UserLoginResponse>
 
     companion object {
-        var loginService : LoginService? = null
+        private var loginService : LoginService? = null
         fun getInstance() : LoginService {
             if (loginService == null) {
                 loginService = ServiceBuilder.buildService(LoginService::class.java)
