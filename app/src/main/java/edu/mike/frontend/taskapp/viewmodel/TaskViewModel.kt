@@ -26,11 +26,10 @@ class TaskViewModel constructor(
      * The coroutine on the main thread will be resumed with the result as soon as the
      * withContext block is complete.
      */
-    fun getTask() {
+    fun getTask(id:Long) {
         job = CoroutineScope(Dispatchers.IO + exceptionHandler).launch {
             loading.postValue(true)
-            val position : Int = (1..2).random()
-            val response = taskRepository.getTaskById(position.toLong())
+            val response = taskRepository.getTaskById(id)
             withContext(Dispatchers.Main) {
                 if (response.isSuccessful) {
                     task.postValue(response.body())

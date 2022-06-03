@@ -41,7 +41,7 @@ class TaskActivity : AppCompatActivity() {
 
         // Listener when the user click the screen container
         binding.viewContainer.setOnClickListener {
-            taskViewModel.getTask()
+            taskViewModel.getTask(1)
         }
 
         // Observer method to bind data of taskList into Recycler View

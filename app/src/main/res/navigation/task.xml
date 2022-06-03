@@ -17,6 +17,6 @@
     <fragment
         android:id="@+id/taskScreen"
         android:name="edu.mike.frontend.taskapp.view.task.Task"
-        android:label="fragment_task"
+        android:label="@string/title_task"
         tools:layout="@layout/fragment_task" />
 </navigation>
