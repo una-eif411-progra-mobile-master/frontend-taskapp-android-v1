@@ -13,9 +13,6 @@
         android:theme="@style/Theme.TaskApp">
         <activity
             android:name=".view.LoginActivity"
-            android:exported="false" />
-        <activity
-            android:name=".view.MainActivity"
             android:exported="true">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -25,6 +22,9 @@
             <!-- This is added to handle a deep link -->
             <nav-graph android:value="@navigation/task" />
         </activity>
+        <activity
+            android:name=".view.MainActivity"
+            android:exported="false" />
         <activity android:name=".view.TaskActivity" />
     </application>
 

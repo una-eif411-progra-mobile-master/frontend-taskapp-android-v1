@@ -17,12 +17,12 @@
 
 <menu xmlns:android="http://schemas.android.com/apk/res/android">
     <item
-        android:id="@+id/taskNav"
+        android:id="@+id/homeScreen"
         android:icon="@drawable/ic_home"
         android:contentDescription="@string/cd_home"
         android:title="@string/title_home" />
     <item
-        android:id="@+id/aboutScreen"
+        android:id="@+id/taskNav"
         android:icon="@drawable/ic_list"
         android:contentDescription="@string/cd_list"
         android:title="@string/title_list" />

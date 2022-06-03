@@ -125,7 +125,7 @@ class LoginActivity : AppCompatActivity() {
         val username = model.username
 
         // Initiate successful logged in experience
-        val intent = Intent(this, TaskActivity::class.java)
+        val intent = Intent(this, MainActivity::class.java)
         startActivity(intent)
 
         Toast.makeText(
