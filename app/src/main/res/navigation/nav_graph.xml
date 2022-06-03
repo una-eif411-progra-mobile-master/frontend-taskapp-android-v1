@@ -9,7 +9,7 @@
     <fragment
         android:id="@+id/aboutScreen"
         android:name="edu.mike.frontend.taskapp.view.about.About"
-        android:label="fragment_about"
+        android:label="@string/title_about"
         tools:layout="@layout/fragment_about" />
     <fragment
         android:id="@+id/homeScreen"

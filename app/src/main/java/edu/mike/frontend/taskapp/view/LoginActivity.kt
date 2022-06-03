@@ -26,8 +26,6 @@ class LoginActivity : AppCompatActivity() {
     // Definition of the binding variable
     private lateinit var binding: ActivityLoginBinding
     private lateinit var loginViewModel: LoginViewModel
-    private lateinit var sessionManager: SessionManager
-
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -35,8 +33,6 @@ class LoginActivity : AppCompatActivity() {
         // With View Binding
         binding = ActivityLoginBinding.inflate(layoutInflater)
         setContentView(binding.root)
-
-        sessionManager = SessionManager(this)
 
         // LoginViewModelFactory
         loginViewModel =

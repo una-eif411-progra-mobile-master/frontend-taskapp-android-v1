@@ -8,8 +8,8 @@
     <fragment
         android:id="@+id/taskListScreen"
         android:name="edu.mike.frontend.taskapp.view.task.TaskList"
-        android:label="fragment_task_list"
-        tools:layout="@layout/fragment_task_list" >
+        android:label="@string/title_list"
+        tools:layout="@layout/fragment_task_list">
         <action
             android:id="@+id/action_taskListScreen_to_taskScreen"
             app:destination="@id/taskScreen" />

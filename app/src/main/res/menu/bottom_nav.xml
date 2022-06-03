@@ -26,4 +26,9 @@
         android:icon="@drawable/ic_list"
         android:contentDescription="@string/cd_list"
         android:title="@string/title_list" />
+    <item
+        android:id="@+id/aboutScreen"
+        android:icon="@drawable/ic_feedback"
+        android:contentDescription="@string/title_about"
+        android:title="@string/title_about" />
 </menu>
