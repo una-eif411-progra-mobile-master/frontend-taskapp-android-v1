@@ -8,4 +8,6 @@ class TaskRepository constructor(
     suspend fun getAllTask() = taskService.getAllTasks()
 
     suspend fun getTaskById(id : Long) = taskService.getTaskById(id)
+
+    suspend fun deleteTaskById(id : Long) = taskService.deleteTaskById(id)
 }

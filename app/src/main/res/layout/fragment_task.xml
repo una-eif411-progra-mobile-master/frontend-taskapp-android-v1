@@ -64,6 +64,14 @@
                 android:singleLine="false"
                 android:textSize="34sp" />
 
+            <Button
+                android:id="@+id/btnDelete"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_weight="0"
+                android:backgroundTint="@color/colorWarning"
+                android:text="@string/action_delete" />
+
         </LinearLayout>
     </LinearLayout>
 

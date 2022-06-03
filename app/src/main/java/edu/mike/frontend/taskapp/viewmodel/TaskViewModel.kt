@@ -61,6 +61,13 @@ class TaskViewModel constructor(
         }
     }
 
+    fun deleteTaskById(id: Long){
+        job = CoroutineScope(Dispatchers.IO + exceptionHandler).launch {
+            loading.postValue(true)
+            val response = taskRepository.deleteTaskById(id)
+        }
+    }
+
     private fun onError(message: String) {
         errorMessage.value = message
         loading.value = false

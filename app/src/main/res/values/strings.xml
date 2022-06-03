@@ -6,6 +6,7 @@
     <string name="prompt_password">Password</string>
     <string name="action_sign_in">Sign in</string>
     <string name="action_sign_in_short">Sign in</string>
+    <string name="action_delete">Delete Task</string>
     <string name="action_logout">Logout and close app</string>
     <string name="welcome">"Welcome to TaskApp!"</string>
     <string name="invalid_username">Not a valid username</string>
@@ -21,6 +22,7 @@
     <string name="title_task">Task</string>
     <string name="task_title">Title:</string>
     <string name="task_notes">Notes:</string>
+    <string name="dialog_dialog">Are you sure?</string>
 
 
 </resources>
