@@ -11,4 +11,13 @@
     <string name="invalid_username">Not a valid username</string>
     <string name="invalid_password">Password must be >=5 characters</string>
     <string name="login_failed">"Login failed"</string>
+    <string name="title_home">Home</string>
+    <string name="cd_home">Home</string>
+    <string name="title_list">Tasks</string>
+    <string name="cd_list">List</string>
+    <string name="title_register">Register</string>
+    <string name="cd_form">Form</string>
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
+
 </resources>
