@@ -27,6 +27,11 @@
         android:contentDescription="@string/cd_list"
         android:title="@string/title_list" />
     <item
+        android:id="@+id/taskAddScreen"
+        android:icon="@drawable/task_add"
+        android:contentDescription="@string/cd_add_task"
+        android:title="@string/title_add_task" />
+    <item
         android:id="@+id/aboutScreen"
         android:icon="@drawable/ic_feedback"
         android:contentDescription="@string/title_about"

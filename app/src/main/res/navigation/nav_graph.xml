@@ -16,4 +16,9 @@
         android:name="edu.mike.frontend.taskapp.view.home.Home"
         android:label="@string/title_home"
         tools:layout="@layout/fragment_home" />
+    <fragment
+        android:id="@+id/taskAddScreen"
+        android:name="edu.mike.frontend.taskapp.view.task.TaskAdd"
+        android:label="@string/title_add_task"
+        tools:layout="@layout/fragment_task_add" />
 </navigation>
