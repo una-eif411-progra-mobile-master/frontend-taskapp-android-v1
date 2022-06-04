@@ -29,5 +29,6 @@
     <string name="dialog_dialog">Are you sure?</string>
     <string name="edit_task_title">Title</string>
     <string name="edit_task_note">Notes</string>
+    <string name="edit_due_date">Due Date</string>
 
 </resources>

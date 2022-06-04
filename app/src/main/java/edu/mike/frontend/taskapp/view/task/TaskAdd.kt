@@ -10,6 +10,8 @@ import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
 import edu.mike.frontend.taskapp.databinding.FragmentTaskAddBinding
 import edu.mike.frontend.taskapp.model.Priority
+import edu.mike.frontend.taskapp.viewmodel.PriorityViewModel
+import edu.mike.frontend.taskapp.viewmodel.PriorityViewModelFactory
 import edu.mike.frontend.taskapp.viewmodel.TaskViewModel
 import edu.mike.frontend.taskapp.viewmodel.TaskViewModelFactory
 
@@ -21,18 +23,14 @@ class TaskAdd : Fragment() {
 
     // View model
     private lateinit var taskViewModel: TaskViewModel
+    private lateinit var priorityViewModel: PriorityViewModel
 
+    private lateinit var priorities : List<Priority>
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-
-        var priorities = ArrayList<Priority>()
-
-        priorities.add(Priority(id = 1, label = "Height"))
-        priorities.add(Priority(id = 2, label = "Medium"))
-        priorities.add(Priority(id = 3, label = "Low"))
 
         _binding = FragmentTaskAddBinding.inflate(inflater, container, false)
 
@@ -40,33 +38,41 @@ class TaskAdd : Fragment() {
         taskViewModel =
             ViewModelProvider(this, TaskViewModelFactory())[TaskViewModel::class.java]
 
-        // access the spinner
-        if (binding.spinnerPriority != null) {
-            val adapter : ArrayAdapter<Priority> = ArrayAdapter<Priority>(
-                activity?.applicationContext!!,
-                android.R.layout.simple_spinner_item,
-                priorities
-            )
+        priorityViewModel =
+            ViewModelProvider(this, PriorityViewModelFactory())[PriorityViewModel::class.java]
 
-            binding.spinnerPriority.adapter = adapter
+        // Observer method to bind data
+        priorityViewModel.priorityList.observe(viewLifecycleOwner) {
+            priorities = it
+            // access the spinner
+            if (binding.spinnerPriority != null && priorities != null) {
+                val adapter: ArrayAdapter<Priority> = ArrayAdapter<Priority>(
+                    activity?.applicationContext!!,
+                    android.R.layout.simple_spinner_item,
+                    priorities
+                )
 
-            binding.spinnerPriority.onItemSelectedListener = object :
-                AdapterView.OnItemSelectedListener {
-                override fun onItemSelected(
-                    parent: AdapterView<*>,
-                    view: View, position: Int, id: Long
-                ) {
-                    val prioritySelected : Priority = parent.selectedItem as Priority
-                }
+                binding.spinnerPriority.adapter = adapter
 
-                override fun onNothingSelected(parent: AdapterView<*>) {
-                    // write code to perform some action
+                binding.spinnerPriority.onItemSelectedListener = object :
+                    AdapterView.OnItemSelectedListener {
+                    override fun onItemSelected(
+                        parent: AdapterView<*>,
+                        view: View, position: Int, id: Long
+                    ) {
+                        val prioritySelected: Priority = parent.selectedItem as Priority
+                    }
+
+                    override fun onNothingSelected(parent: AdapterView<*>) {
+                        // write code to perform some action
+                    }
                 }
             }
         }
 
+        priorityViewModel.findAllPriorities()
+
         // Inflate the layout for this fragment
         return binding.root
     }
-
 }
