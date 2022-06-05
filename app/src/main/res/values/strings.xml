@@ -30,5 +30,7 @@
     <string name="edit_task_title">Title</string>
     <string name="edit_task_note">Notes</string>
     <string name="edit_due_date">Due Date</string>
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
 
 </resources>

@@ -93,4 +93,7 @@ dependencies {
     // Jetpack Compose Integration
     implementation "androidx.navigation:navigation-compose:$nav_version"
 
+    // Date Picker
+    implementation 'com.wdullaer:materialdatetimepicker:4.2.3'
+
 }

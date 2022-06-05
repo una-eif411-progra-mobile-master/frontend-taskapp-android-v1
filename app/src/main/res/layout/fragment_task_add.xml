@@ -14,7 +14,7 @@
         android:layout_width="match_parent"
         android:layout_height="168dp"
         android:layout_marginTop="20dp"
-        android:src="@drawable/task_add" />
+        android:src="@drawable/task_new" />
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -62,6 +62,16 @@
                 android:layout_height="wrap_content"
                 android:minHeight="60dp"
                 tools:ignore="SpeakableTextPresentCheck" />
+
+            <EditText
+                android:id="@+id/textDueDate"
+                android:hint="@string/edit_due_date"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:inputType="date"
+                android:focusable="false"
+                android:clickable="true"
+                android:maxLines="1" />
 
             <Button
                 android:id="@+id/button"
