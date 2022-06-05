@@ -7,14 +7,15 @@ import androidx.navigation.findNavController
 import androidx.recyclerview.widget.RecyclerView
 import edu.mike.frontend.taskapp.R
 import edu.mike.frontend.taskapp.databinding.TaskItemBinding
-import edu.mike.frontend.taskapp.model.Task
+import edu.mike.frontend.taskapp.model.TaskRequest
+import edu.mike.frontend.taskapp.model.TaskResponse
 
 class TaskAdapter : RecyclerView.Adapter<MainViewHolder>(){
 
-    private var tasks = mutableListOf<Task>()
+    private var taskRequestRequests = mutableListOf<TaskResponse>()
 
-    fun setTaskList(tasks: List<Task>) {
-        this.tasks = tasks.toMutableList()
+    fun setTaskList(taskRequestRequests: List<TaskResponse>) {
+        this.taskRequestRequests = taskRequestRequests.toMutableList()
         notifyDataSetChanged()
     }
 
@@ -26,12 +27,12 @@ class TaskAdapter : RecyclerView.Adapter<MainViewHolder>(){
     }
 
     override fun onBindViewHolder(holder: MainViewHolder, position: Int) {
-        val task = tasks[position]
+        val task = taskRequestRequests[position]
         holder.binding.title.text = task.title
         holder.binding.notes.text = task.notes
 
         holder.itemView.setOnClickListener() {
-            val bundle = bundleOf (TASK_ID to tasks[position].id.toString())
+            val bundle = bundleOf (TASK_ID to taskRequestRequests[position].id.toString())
 
             holder.itemView.findNavController().navigate(
                 R.id.action_taskListScreen_to_taskScreen, bundle
@@ -40,7 +41,7 @@ class TaskAdapter : RecyclerView.Adapter<MainViewHolder>(){
     }
 
     override fun getItemCount(): Int {
-        return tasks.size
+        return taskRequestRequests.size
     }
 
     companion object {

@@ -36,7 +36,7 @@ class TaskList : Fragment() {
             ViewModelProvider(this, TaskViewModelFactory())[TaskViewModel::class.java]
 
         // Observer method to bind data of taskList into Recycler View
-        taskViewModel.taskList.observe(viewLifecycleOwner) {
+        taskViewModel.taskResponseList.observe(viewLifecycleOwner) {
             adapter.setTaskList(it)
         }
 

@@ -2,7 +2,8 @@ package edu.mike.frontend.taskapp.viewmodel
 
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
-import edu.mike.frontend.taskapp.model.Task
+import edu.mike.frontend.taskapp.model.TaskRequest
+import edu.mike.frontend.taskapp.model.TaskResponse
 import edu.mike.frontend.taskapp.repository.TaskRepository
 import kotlinx.coroutines.*
 
@@ -10,8 +11,8 @@ class TaskViewModel constructor(
     private val taskRepository: TaskRepository,
 ) : ViewModel() {
 
-    val task =  MutableLiveData<Task>()
-    val taskList = MutableLiveData<List<Task>>()
+    val taskResponse =  MutableLiveData<TaskResponse>()
+    val taskResponseList = MutableLiveData<List<TaskResponse>>()
 
     private var job: Job? = null
     private val errorMessage = MutableLiveData<String>()
@@ -32,7 +33,7 @@ class TaskViewModel constructor(
             val response = taskRepository.getTaskById(id)
             withContext(Dispatchers.Main) {
                 if (response.isSuccessful) {
-                    task.postValue(response.body())
+                    taskResponse.postValue(response.body())
                     loading.value = false
                 } else {
                     onError("Error : ${response.message()}")
@@ -52,7 +53,7 @@ class TaskViewModel constructor(
             val response = taskRepository.getAllTask()
             withContext(Dispatchers.Main) {
                 if (response.isSuccessful) {
-                    taskList.postValue(response.body())
+                    taskResponseList.postValue(response.body())
                     loading.value = false
                 } else {
                     onError("Error : ${response.message()}")
@@ -65,6 +66,20 @@ class TaskViewModel constructor(
         job = CoroutineScope(Dispatchers.IO + exceptionHandler).launch {
             loading.postValue(true)
             val response = taskRepository.deleteTaskById(id)
+        }
+    }
+
+    fun createTask(taskRequest : TaskRequest){
+        job = CoroutineScope(Dispatchers.IO + exceptionHandler).launch {
+            loading.postValue(true)
+            val response = taskRepository.createTask(taskRequest)
+            withContext(Dispatchers.Main) {
+                if (response.isSuccessful) {
+                    loading.value = false
+                } else {
+                    onError("Error : ${response.message()}")
+                }
+            }
         }
     }
 

@@ -15,7 +15,7 @@ import edu.mike.frontend.taskapp.databinding.FragmentTaskBinding
 import edu.mike.frontend.taskapp.viewmodel.TaskViewModel
 import edu.mike.frontend.taskapp.viewmodel.TaskViewModelFactory
 
-class Task : Fragment() {
+class TaskView : Fragment() {
 
     // Definition of the binding variable
     private var _binding: FragmentTaskBinding ?= null
@@ -38,7 +38,7 @@ class Task : Fragment() {
             ViewModelProvider(this, TaskViewModelFactory())[TaskViewModel::class.java]
 
         // Observer method to bind data of task into text views
-        taskViewModel.task.observe(viewLifecycleOwner) {
+        taskViewModel.taskResponse.observe(viewLifecycleOwner) {
             binding.txtTaskTitle.text = it.title
             binding.txtNotes.text = it.notes
         }

@@ -8,9 +8,12 @@ import android.widget.AdapterView
 import android.widget.ArrayAdapter
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
+import androidx.navigation.fragment.findNavController
 import com.google.android.material.datepicker.MaterialDatePicker
+import edu.mike.frontend.taskapp.R
 import edu.mike.frontend.taskapp.databinding.FragmentTaskAddBinding
 import edu.mike.frontend.taskapp.model.Priority
+import edu.mike.frontend.taskapp.model.TaskRequest
 import edu.mike.frontend.taskapp.viewmodel.PriorityViewModel
 import edu.mike.frontend.taskapp.viewmodel.PriorityViewModelFactory
 import edu.mike.frontend.taskapp.viewmodel.TaskViewModel
@@ -29,6 +32,7 @@ class TaskAdd : Fragment() {
     private lateinit var priorityViewModel: PriorityViewModel
 
     private lateinit var priorities: List<Priority>
+    private lateinit var prioritySelected: Priority
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -63,7 +67,7 @@ class TaskAdd : Fragment() {
                         parent: AdapterView<*>,
                         view: View, position: Int, id: Long
                     ) {
-                        val prioritySelected: Priority = parent.selectedItem as Priority
+                        prioritySelected = parent.selectedItem as Priority
                     }
 
                     override fun onNothingSelected(parent: AdapterView<*>) {
@@ -95,6 +99,18 @@ class TaskAdd : Fragment() {
                     }"
                 binding.textDueDate.setText(stringData)
             }
+        }
+
+        binding.btnCreate.setOnClickListener(){
+            val formatter = SimpleDateFormat("dd/MM/yyyy")
+            val text = binding.textDueDate.text.toString()
+            val date = formatter.parse(text)
+            taskViewModel.createTask(TaskRequest(
+                title = binding.editTextTaskTitle.text.toString(),
+                notes = binding.editTextTaskNotes.text.toString(),
+                dueDate = date,
+                priority = prioritySelected))
+            findNavController().navigate(R.id.taskNav)
         }
 
         priorityViewModel.findAllPriorities()
