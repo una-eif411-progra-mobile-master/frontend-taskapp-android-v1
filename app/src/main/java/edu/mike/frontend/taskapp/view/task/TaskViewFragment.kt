@@ -12,6 +12,7 @@ import androidx.navigation.fragment.findNavController
 import edu.mike.frontend.taskapp.R
 import edu.mike.frontend.taskapp.adapter.TaskAdapter.Companion.TASK_ID
 import edu.mike.frontend.taskapp.databinding.FragmentTaskViewBinding
+import edu.mike.frontend.taskapp.viewmodel.StateTask
 import edu.mike.frontend.taskapp.viewmodel.TaskViewModel
 
 class TaskViewFragment : Fragment() {
@@ -33,12 +34,30 @@ class TaskViewFragment : Fragment() {
         val taskId: String = arguments?.getString(TASK_ID) ?: "0"
 
         // Observer method to bind data of task into text views
-        taskViewModel.taskResponse.observe(viewLifecycleOwner) {
-            binding.txtTaskTitle.text = it.title
-            binding.txtNotes.text = it.notes
+        taskViewModel.state.observe(viewLifecycleOwner) { state ->
+            // this lets us avoid repeating 'binding.frameNews' before everything
+            with(binding.root) {
+                when (state) {
+                    // just checking equality because Loading is a -singleton object instance-
+                    StateTask.Loading -> {
+                        // TODO: If you need do something in loading
+                    }
+                    // Error and Success are both -classes- so we need to check their type with 'is'
+                    is StateTask.Error -> {
+                        // TODO: If you need do something in error
+                    }
+                    is StateTask.Success -> {
+                        state.task?.let {
+                            binding.txtTaskTitle.text = it.title
+                            binding.txtNotes.text = it.notes
+                        }
+                    }
+                    else -> {
+                        // TODO: Not state loaded
+                    }
+                }
+            }
         }
-
-        taskViewModel.getTask(taskId.toLong())
 
         binding.btnDelete.setOnClickListener {
             val dialogBuilder = AlertDialog.Builder(requireActivity())
@@ -65,6 +84,8 @@ class TaskViewFragment : Fragment() {
 
             findNavController().navigate(R.id.action_taskScreen_to_taskUpdate, bundle)
         }
+
+        taskViewModel.getTask(taskId.toLong())
 
         // Inflate the layout for this fragment
         return binding.root

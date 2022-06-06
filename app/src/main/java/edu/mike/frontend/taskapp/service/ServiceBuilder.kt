@@ -5,6 +5,7 @@ import com.google.gson.GsonBuilder
 import edu.mike.frontend.taskapp.BuildConfig
 import edu.mike.frontend.taskapp.utils.AuthorizationInterceptor
 import okhttp3.OkHttpClient
+import okhttp3.logging.HttpLoggingInterceptor
 import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
 
@@ -18,8 +19,14 @@ object ServiceBuilder {
         .setDateFormat(BuildConfig.DATE_FORMAT)
         .create()
 
+    // If you need to check your request change the Level
+    var loggingInterceptor: HttpLoggingInterceptor = HttpLoggingInterceptor().setLevel(
+        HttpLoggingInterceptor.Level.NONE
+    )
+
     private val client =
-        OkHttpClient.Builder().addInterceptor(AuthorizationInterceptor()).build()
+        OkHttpClient.Builder().addInterceptor(loggingInterceptor)
+            .addInterceptor(AuthorizationInterceptor()).build()
 
     private val retrofit = Retrofit.Builder()
         .baseUrl(BuildConfig.BASE_URL) // change this IP for testing by your actual machine IP

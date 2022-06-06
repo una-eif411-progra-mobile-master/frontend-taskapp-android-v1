@@ -17,28 +17,28 @@ import edu.mike.frontend.taskapp.databinding.FragmentTaskUpdateBinding
 import edu.mike.frontend.taskapp.model.Priority
 import edu.mike.frontend.taskapp.model.TaskRequest
 import edu.mike.frontend.taskapp.model.TaskResponse
-import edu.mike.frontend.taskapp.viewmodel.PriorityViewModel
-import edu.mike.frontend.taskapp.viewmodel.PriorityViewModelFactory
-import edu.mike.frontend.taskapp.viewmodel.TaskViewModel
+import edu.mike.frontend.taskapp.viewmodel.*
 import java.text.SimpleDateFormat
 import java.util.*
 
 class TaskUpdateFragment : Fragment() {
 
-
     // Definition of the binding variable
     private var _binding: FragmentTaskUpdateBinding? = null
     private val binding get() = _binding!!
+
+    // Late init var
+    private lateinit var priorities: List<Priority>
+    private lateinit var taskResponse: TaskResponse
+    private lateinit var prioritySelected : Priority
+    private lateinit var taskId: String
+    private lateinit var spinnerAdapter : ArrayAdapter<Priority>
 
     // Shared view model
     private val taskViewModel: TaskViewModel by activityViewModels()
     private val priorityViewModel: PriorityViewModel by activityViewModels() {
         PriorityViewModelFactory()
     }
-
-    private lateinit var priorities: List<Priority>
-    private lateinit var prioritySelected: Priority
-    private lateinit var taskResponse: TaskResponse
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -48,33 +48,54 @@ class TaskUpdateFragment : Fragment() {
 
         _binding = FragmentTaskUpdateBinding.inflate(inflater, container, false)
 
-        val taskId: String = arguments?.getString(TaskAdapter.TASK_ID) ?: "0"
+        taskId = arguments?.getString(TaskAdapter.TASK_ID) ?: "0"
 
         // Observer method to bind data of task into text views
-        taskViewModel.taskResponse.observe(viewLifecycleOwner) {
-            val formatter = SimpleDateFormat(BuildConfig.DATE_FORMAT)
-            taskResponse = it
-            binding.includeTaskForm.editTextTaskTitle.setText(it.title)
-            binding.includeTaskForm.editTextTaskNotes.setText(it.notes)
-            binding.includeTaskForm.textDueDate.setText(formatter.format(it.dueDate))
+        taskViewModel.state.observe(viewLifecycleOwner) { state ->
+            with(binding.includeTaskForm) {
+                when (state) {
+                    // just checking equality because Loading is a -singleton object instance-
+                    StateTask.Loading -> {
+                        // TODO: If you need do something in loading
+                    }
+                    // Error and Success are both -classes- so we need to check their type with 'is'
+                    is StateTask.Error -> {
+                        // TODO: If you need do something in error
+                    }
+                    is StateTask.Success -> {
+                        state.task?.let {
+                            val formatter =
+                                SimpleDateFormat(BuildConfig.DATE_FORMAT, Locale.getDefault())
+                            taskResponse = it
+                            binding.includeTaskForm.editTextTaskTitle.setText(it.title)
+                            binding.includeTaskForm.editTextTaskNotes.setText(it.notes)
+                            binding.includeTaskForm.textDueDate.setText(formatter.format(it.dueDate))
+                            if (it.priority != null && ::spinnerAdapter.isInitialized) {
+                                val spinnerPosition: Int = spinnerAdapter.getPosition(it.priority)
+                                binding.includeTaskForm.spinnerPriority.setSelection(spinnerPosition)
+                            }
+                        }
+
+                    }
+                    else -> {
+                        // TODO: Not state loaded
+                    }
+                }
+            }
         }
-
-        taskViewModel.getTask(taskId.toLong())
-
-        priorityViewModel.findAllPriorities()
 
         // Observer method to bind data
         priorityViewModel.priorityList.observe(viewLifecycleOwner) {
             priorities = it
 
             // access the spinner
-            val adapter: ArrayAdapter<Priority> = ArrayAdapter<Priority>(
+            spinnerAdapter = ArrayAdapter<Priority>(
                 activity?.applicationContext!!,
                 android.R.layout.simple_spinner_item,
                 priorities
             )
 
-            binding.includeTaskForm.spinnerPriority.adapter = adapter
+            binding.includeTaskForm.spinnerPriority.adapter = spinnerAdapter
 
             binding.includeTaskForm.spinnerPriority.onItemSelectedListener = object :
                 AdapterView.OnItemSelectedListener {
@@ -93,11 +114,6 @@ class TaskUpdateFragment : Fragment() {
                 override fun onNothingSelected(parent: AdapterView<*>) {
                     // write code to perform some action
                 }
-            }
-
-            if (taskResponse.priority.label != null) {
-                val spinnerPosition: Int = adapter.getPosition(taskResponse.priority)
-                binding.includeTaskForm.spinnerPriority.setSelection(spinnerPosition)
             }
         }
 
@@ -124,7 +140,7 @@ class TaskUpdateFragment : Fragment() {
         }
 
         binding.btnUpdate.setOnClickListener {
-            val formatter = SimpleDateFormat(BuildConfig.DATE_FORMAT)
+            val formatter = SimpleDateFormat(BuildConfig.DATE_FORMAT, Locale.getDefault())
             val taskUpdated = TaskRequest(
                 id = taskResponse.id,
                 title = binding.includeTaskForm.editTextTaskTitle.text.toString(),
@@ -134,10 +150,35 @@ class TaskUpdateFragment : Fragment() {
             )
 
             taskViewModel.updateTask(taskUpdated)
-            findNavController().navigate(R.id.action_taskUpdateScreen_to_taskListScreen2)
+            taskViewModel.state.observe(viewLifecycleOwner) { state ->
+                when (state) {
+                    // just checking equality because Loading is a -singleton object instance-
+                    StateTask.Loading -> {
+                        // TODO: If you need do something in loading
+                    }
+                    // Error and Success are both -classes- so we need to check their type with 'is'
+                    is StateTask.Error -> {
+                        // TODO: If you need do something in error
+                    }
+                    is StateTask.Success -> {
+                        findNavController().navigate(R.id.action_taskUpdateScreen_to_taskListScreen2)
+                    }
+                    else -> {
+                        // TODO: Not state loaded
+                    }
+                }
+            }
         }
+
+        priorityViewModel.findAllPriorities()
 
         // Inflate the layout for this fragment
         return binding.root
+    }
+
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
+
+        taskViewModel.getTask(taskId.toLong())
     }
 }
