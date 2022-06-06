@@ -7,7 +7,7 @@
 
     <fragment
         android:id="@+id/taskListScreen"
-        android:name="edu.mike.frontend.taskapp.view.task.TaskList"
+        android:name="edu.mike.frontend.taskapp.view.task.TaskListFragment"
         android:label="@string/title_list"
         tools:layout="@layout/fragment_task_list">
         <action
@@ -16,7 +16,7 @@
     </fragment>
     <fragment
         android:id="@+id/taskViewScreen"
-        android:name="edu.mike.frontend.taskapp.view.task.TaskView"
+        android:name="edu.mike.frontend.taskapp.view.task.TaskViewFragment"
         android:label="@string/title_task"
         tools:layout="@layout/fragment_task_view" >
         <action
@@ -25,11 +25,13 @@
     </fragment>
     <fragment
         android:id="@+id/taskUpdateScreen"
-        android:name="edu.mike.frontend.taskapp.view.task.TaskUpdate"
+        android:name="edu.mike.frontend.taskapp.view.task.TaskUpdateFragment"
         android:label="@string/action_update"
         tools:layout="@layout/fragment_task_update">
         <action
             android:id="@+id/action_taskUpdateScreen_to_taskListScreen2"
-            app:destination="@id/taskListScreen" />
+            app:destination="@id/taskListScreen"
+            app:popUpTo="@id/taskUpdateScreen"
+            app:popUpToInclusive="true"/>
     </fragment>
 </navigation>

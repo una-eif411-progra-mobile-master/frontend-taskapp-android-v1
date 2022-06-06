@@ -7,7 +7,7 @@ import android.view.ViewGroup
 import android.widget.AdapterView
 import android.widget.ArrayAdapter
 import androidx.fragment.app.Fragment
-import androidx.lifecycle.ViewModelProvider
+import androidx.fragment.app.activityViewModels
 import androidx.navigation.fragment.findNavController
 import com.google.android.material.datepicker.MaterialDatePicker
 import edu.mike.frontend.taskapp.BuildConfig
@@ -20,20 +20,21 @@ import edu.mike.frontend.taskapp.model.TaskResponse
 import edu.mike.frontend.taskapp.viewmodel.PriorityViewModel
 import edu.mike.frontend.taskapp.viewmodel.PriorityViewModelFactory
 import edu.mike.frontend.taskapp.viewmodel.TaskViewModel
-import edu.mike.frontend.taskapp.viewmodel.TaskViewModelFactory
 import java.text.SimpleDateFormat
 import java.util.*
 
-class TaskUpdate : Fragment() {
+class TaskUpdateFragment : Fragment() {
 
 
     // Definition of the binding variable
     private var _binding: FragmentTaskUpdateBinding? = null
     private val binding get() = _binding!!
 
-    // View model
-    private lateinit var taskViewModel: TaskViewModel
-    private lateinit var priorityViewModel: PriorityViewModel
+    // Shared view model
+    private val taskViewModel: TaskViewModel by activityViewModels()
+    private val priorityViewModel: PriorityViewModel by activityViewModels() {
+        PriorityViewModelFactory()
+    }
 
     private lateinit var priorities: List<Priority>
     private lateinit var prioritySelected: Priority
@@ -47,11 +48,7 @@ class TaskUpdate : Fragment() {
 
         _binding = FragmentTaskUpdateBinding.inflate(inflater, container, false)
 
-        val taskId : String = arguments?.getString(TaskAdapter.TASK_ID) ?: "0"
-
-        // TaskViewModelFactory
-        taskViewModel =
-            ViewModelProvider(this, TaskViewModelFactory())[TaskViewModel::class.java]
+        val taskId: String = arguments?.getString(TaskAdapter.TASK_ID) ?: "0"
 
         // Observer method to bind data of task into text views
         taskViewModel.taskResponse.observe(viewLifecycleOwner) {
@@ -63,9 +60,6 @@ class TaskUpdate : Fragment() {
         }
 
         taskViewModel.getTask(taskId.toLong())
-
-        priorityViewModel =
-            ViewModelProvider(this, PriorityViewModelFactory())[PriorityViewModel::class.java]
 
         priorityViewModel.findAllPriorities()
 
@@ -139,8 +133,7 @@ class TaskUpdate : Fragment() {
                 priority = prioritySelected
             )
 
-            taskViewModel.createTask(taskUpdated)
-
+            taskViewModel.updateTask(taskUpdated)
             findNavController().navigate(R.id.action_taskUpdateScreen_to_taskListScreen2)
         }
 

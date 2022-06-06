@@ -86,14 +86,7 @@ class TaskViewModel constructor(
     fun updateTask(taskRequest : TaskRequest){
         job = CoroutineScope(Dispatchers.IO + exceptionHandler).launch {
             loading.postValue(true)
-            val response = taskRepository.updateTask(taskRequest)
-            withContext(Dispatchers.Main) {
-                if (response.isSuccessful) {
-                    loading.value = false
-                } else {
-                    onError("Error : ${response.message()}")
-                }
-            }
+            taskRepository.updateTask(taskRequest)
         }
     }
 

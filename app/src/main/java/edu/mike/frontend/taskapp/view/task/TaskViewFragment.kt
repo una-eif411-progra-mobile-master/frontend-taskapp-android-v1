@@ -7,22 +7,21 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.core.os.bundleOf
 import androidx.fragment.app.Fragment
-import androidx.lifecycle.ViewModelProvider
+import androidx.fragment.app.activityViewModels
 import androidx.navigation.fragment.findNavController
 import edu.mike.frontend.taskapp.R
 import edu.mike.frontend.taskapp.adapter.TaskAdapter.Companion.TASK_ID
 import edu.mike.frontend.taskapp.databinding.FragmentTaskViewBinding
 import edu.mike.frontend.taskapp.viewmodel.TaskViewModel
-import edu.mike.frontend.taskapp.viewmodel.TaskViewModelFactory
 
-class TaskView : Fragment() {
+class TaskViewFragment : Fragment() {
 
     // Definition of the binding variable
-    private var _binding: FragmentTaskViewBinding ?= null
+    private var _binding: FragmentTaskViewBinding? = null
     private val binding get() = _binding!!
 
-    // View model
-    private lateinit var taskViewModel: TaskViewModel
+    // Shared view model
+    private val taskViewModel: TaskViewModel by activityViewModels()
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -31,11 +30,7 @@ class TaskView : Fragment() {
 
         _binding = FragmentTaskViewBinding.inflate(inflater, container, false)
 
-        val taskId : String = arguments?.getString(TASK_ID) ?: "0"
-
-        // TaskViewModelFactory
-        taskViewModel =
-            ViewModelProvider(this, TaskViewModelFactory())[TaskViewModel::class.java]
+        val taskId: String = arguments?.getString(TASK_ID) ?: "0"
 
         // Observer method to bind data of task into text views
         taskViewModel.taskResponse.observe(viewLifecycleOwner) {
@@ -66,7 +61,7 @@ class TaskView : Fragment() {
         }
 
         binding.btnUpdate.setOnClickListener {
-            val bundle = bundleOf (TASK_ID to taskId)
+            val bundle = bundleOf(TASK_ID to taskId)
 
             findNavController().navigate(R.id.action_taskScreen_to_taskUpdate, bundle)
         }
@@ -74,4 +69,6 @@ class TaskView : Fragment() {
         // Inflate the layout for this fragment
         return binding.root
     }
+
+
 }

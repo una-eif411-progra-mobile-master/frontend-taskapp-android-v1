@@ -7,16 +7,16 @@ import androidx.navigation.findNavController
 import androidx.recyclerview.widget.RecyclerView
 import edu.mike.frontend.taskapp.R
 import edu.mike.frontend.taskapp.databinding.TaskItemBinding
-import edu.mike.frontend.taskapp.model.TaskRequest
 import edu.mike.frontend.taskapp.model.TaskResponse
 
-class TaskAdapter : RecyclerView.Adapter<MainViewHolder>(){
+class TaskAdapter : RecyclerView.Adapter<MainViewHolder>() {
 
-    private var taskRequestRequests = mutableListOf<TaskResponse>()
+    private var taskList = mutableListOf<TaskResponse>()
 
-    fun setTaskList(taskRequestRequests: List<TaskResponse>) {
-        this.taskRequestRequests = taskRequestRequests.toMutableList()
-        notifyDataSetChanged()
+    fun setTaskList(taskResponseList: List<TaskResponse>) {
+        this.taskList.clear()
+        this.taskList.addAll(taskResponseList.toMutableList())
+        this.notifyDataSetChanged()
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): MainViewHolder {
@@ -27,12 +27,12 @@ class TaskAdapter : RecyclerView.Adapter<MainViewHolder>(){
     }
 
     override fun onBindViewHolder(holder: MainViewHolder, position: Int) {
-        val task = taskRequestRequests[position]
+        val task = taskList[position]
         holder.binding.title.text = task.title
         holder.binding.notes.text = task.notes
 
         holder.itemView.setOnClickListener() {
-            val bundle = bundleOf (TASK_ID to taskRequestRequests[position].id.toString())
+            val bundle = bundleOf(TASK_ID to taskList[position].id.toString())
 
             holder.itemView.findNavController().navigate(
                 R.id.action_taskListScreen_to_taskScreen, bundle
@@ -41,7 +41,7 @@ class TaskAdapter : RecyclerView.Adapter<MainViewHolder>(){
     }
 
     override fun getItemCount(): Int {
-        return taskRequestRequests.size
+        return taskList.size
     }
 
     companion object {

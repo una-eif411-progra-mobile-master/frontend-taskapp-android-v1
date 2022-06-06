@@ -10,5 +10,5 @@
     app:layout_constraintEnd_toEndOf="parent"
     app:layout_constraintStart_toStartOf="parent"
     app:layout_constraintTop_toTopOf="parent"
-    tools:context="edu.mike.frontend.taskapp.view.task.TaskList"
+    tools:context="edu.mike.frontend.taskapp.view.task.TaskListFragment"
     tools:listitem="@layout/task_item"/>
