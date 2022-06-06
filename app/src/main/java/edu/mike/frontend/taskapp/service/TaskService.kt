@@ -13,7 +13,7 @@ interface TaskService {
     suspend fun getTaskById(@Path("id") id: Long) : Response<TaskResponse>
 
     @DELETE("v1/tasks/{id}")
-    suspend fun deleteTaskById(@Path("id") id: Long)
+    suspend fun deleteTaskById(@Path("id") id: Long): Response<Void>
 
     @POST("v1/tasks")
     suspend fun createTask(@Body taskRequest: TaskRequest) : Response<TaskResponse>
