@@ -30,8 +30,6 @@
         tools:layout="@layout/fragment_task_update">
         <action
             android:id="@+id/action_taskUpdateScreen_to_taskListScreen2"
-            app:destination="@id/taskListScreen"
-            app:popUpTo="@id/taskUpdateScreen"
-            app:popUpToInclusive="true"/>
+            app:destination="@id/taskListScreen"/>
     </fragment>
 </navigation>
