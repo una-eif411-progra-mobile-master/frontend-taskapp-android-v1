@@ -18,6 +18,9 @@ interface TaskService {
     @POST("v1/tasks")
     suspend fun createTask(@Body taskRequest: TaskRequest) : Response<TaskResponse>
 
+    @PUT("v1/tasks")
+    suspend fun updateTask(@Body taskRequest: TaskRequest) : Response<TaskResponse>
+
     /*
      * Function or any member of the class that can be called without having the instance of the
      * class then you can write the same as a member of a companion object inside the class

@@ -13,4 +13,6 @@ class TaskRepository constructor(
     suspend fun deleteTaskById(id : Long) = taskService.deleteTaskById(id)
 
     suspend fun createTask(taskRequest: TaskRequest) = taskService.createTask(taskRequest)
+
+    suspend fun updateTask(taskRequest: TaskRequest) = taskService.updateTask(taskRequest)
 }

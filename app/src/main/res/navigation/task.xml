@@ -12,11 +12,24 @@
         tools:layout="@layout/fragment_task_list">
         <action
             android:id="@+id/action_taskListScreen_to_taskScreen"
-            app:destination="@id/taskScreen" />
+            app:destination="@id/taskViewScreen" />
     </fragment>
     <fragment
-        android:id="@+id/taskScreen"
+        android:id="@+id/taskViewScreen"
         android:name="edu.mike.frontend.taskapp.view.task.TaskView"
         android:label="@string/title_task"
-        tools:layout="@layout/fragment_task" />
+        tools:layout="@layout/fragment_task_view" >
+        <action
+            android:id="@+id/action_taskScreen_to_taskUpdate"
+            app:destination="@id/taskUpdateScreen" />
+    </fragment>
+    <fragment
+        android:id="@+id/taskUpdateScreen"
+        android:name="edu.mike.frontend.taskapp.view.task.TaskUpdate"
+        android:label="@string/action_update"
+        tools:layout="@layout/fragment_task_update">
+        <action
+            android:id="@+id/action_taskUpdateScreen_to_taskListScreen2"
+            app:destination="@id/taskListScreen" />
+    </fragment>
 </navigation>

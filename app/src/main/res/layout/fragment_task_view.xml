@@ -72,6 +72,14 @@
                 android:backgroundTint="@color/colorWarning"
                 android:text="@string/action_delete" />
 
+            <Button
+                android:id="@+id/btnUpdate"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_weight="0"
+                android:backgroundTint="@color/colorUpdate"
+                android:text="@string/action_update" />
+
         </LinearLayout>
     </LinearLayout>
 

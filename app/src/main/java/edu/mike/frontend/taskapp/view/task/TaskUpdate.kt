@@ -12,9 +12,11 @@ import androidx.navigation.fragment.findNavController
 import com.google.android.material.datepicker.MaterialDatePicker
 import edu.mike.frontend.taskapp.BuildConfig
 import edu.mike.frontend.taskapp.R
-import edu.mike.frontend.taskapp.databinding.FragmentTaskAddBinding
+import edu.mike.frontend.taskapp.adapter.TaskAdapter
+import edu.mike.frontend.taskapp.databinding.FragmentTaskUpdateBinding
 import edu.mike.frontend.taskapp.model.Priority
 import edu.mike.frontend.taskapp.model.TaskRequest
+import edu.mike.frontend.taskapp.model.TaskResponse
 import edu.mike.frontend.taskapp.viewmodel.PriorityViewModel
 import edu.mike.frontend.taskapp.viewmodel.PriorityViewModelFactory
 import edu.mike.frontend.taskapp.viewmodel.TaskViewModel
@@ -22,10 +24,11 @@ import edu.mike.frontend.taskapp.viewmodel.TaskViewModelFactory
 import java.text.SimpleDateFormat
 import java.util.*
 
-class TaskAdd : Fragment() {
+class TaskUpdate : Fragment() {
+
 
     // Definition of the binding variable
-    private var _binding: FragmentTaskAddBinding? = null
+    private var _binding: FragmentTaskUpdateBinding? = null
     private val binding get() = _binding!!
 
     // View model
@@ -34,17 +37,32 @@ class TaskAdd : Fragment() {
 
     private lateinit var priorities: List<Priority>
     private lateinit var prioritySelected: Priority
+    private lateinit var taskResponse: TaskResponse
 
     override fun onCreateView(
-        inflater: LayoutInflater, container: ViewGroup?,
+        inflater: LayoutInflater,
+        container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View {
 
-        _binding = FragmentTaskAddBinding.inflate(inflater, container, false)
+        _binding = FragmentTaskUpdateBinding.inflate(inflater, container, false)
+
+        val taskId : String = arguments?.getString(TaskAdapter.TASK_ID) ?: "0"
 
         // TaskViewModelFactory
         taskViewModel =
             ViewModelProvider(this, TaskViewModelFactory())[TaskViewModel::class.java]
+
+        // Observer method to bind data of task into text views
+        taskViewModel.taskResponse.observe(viewLifecycleOwner) {
+            val formatter = SimpleDateFormat(BuildConfig.DATE_FORMAT)
+            taskResponse = it
+            binding.includeTaskForm.editTextTaskTitle.setText(it.title)
+            binding.includeTaskForm.editTextTaskNotes.setText(it.notes)
+            binding.includeTaskForm.textDueDate.setText(formatter.format(it.dueDate))
+        }
+
+        taskViewModel.getTask(taskId.toLong())
 
         priorityViewModel =
             ViewModelProvider(this, PriorityViewModelFactory())[PriorityViewModel::class.java]
@@ -54,6 +72,7 @@ class TaskAdd : Fragment() {
         // Observer method to bind data
         priorityViewModel.priorityList.observe(viewLifecycleOwner) {
             priorities = it
+
             // access the spinner
             val adapter: ArrayAdapter<Priority> = ArrayAdapter<Priority>(
                 activity?.applicationContext!!,
@@ -62,7 +81,6 @@ class TaskAdd : Fragment() {
             )
 
             binding.includeTaskForm.spinnerPriority.adapter = adapter
-
 
             binding.includeTaskForm.spinnerPriority.onItemSelectedListener = object :
                 AdapterView.OnItemSelectedListener {
@@ -81,6 +99,11 @@ class TaskAdd : Fragment() {
                 override fun onNothingSelected(parent: AdapterView<*>) {
                     // write code to perform some action
                 }
+            }
+
+            if (taskResponse.priority.label != null) {
+                val spinnerPosition: Int = adapter.getPosition(taskResponse.priority)
+                binding.includeTaskForm.spinnerPriority.setSelection(spinnerPosition)
             }
         }
 
@@ -106,18 +129,19 @@ class TaskAdd : Fragment() {
             }
         }
 
-        binding.btnCreate.setOnClickListener {
+        binding.btnUpdate.setOnClickListener {
             val formatter = SimpleDateFormat(BuildConfig.DATE_FORMAT)
-            taskViewModel.createTask(
-                TaskRequest(
-                    title = binding.includeTaskForm.editTextTaskTitle.text.toString(),
-                    notes = binding.includeTaskForm.editTextTaskNotes.text.toString(),
-                    dueDate = formatter.parse(binding.includeTaskForm.textDueDate.text.toString())!!,
-                    priority = prioritySelected
-                )
+            val taskUpdated = TaskRequest(
+                id = taskResponse.id,
+                title = binding.includeTaskForm.editTextTaskTitle.text.toString(),
+                notes = binding.includeTaskForm.editTextTaskNotes.text.toString(),
+                dueDate = formatter.parse(binding.includeTaskForm.textDueDate.text.toString())!!,
+                priority = prioritySelected
             )
 
-            findNavController().navigate(R.id.action_taskAddScreen_to_taskNav)
+            taskViewModel.createTask(taskUpdated)
+
+            findNavController().navigate(R.id.action_taskUpdateScreen_to_taskListScreen2)
         }
 
         // Inflate the layout for this fragment

@@ -15,7 +15,7 @@ import retrofit2.converter.gson.GsonConverterFactory
  */
 object ServiceBuilder {
     var gson: Gson = GsonBuilder()
-        .setDateFormat("dd/MM/yyyy")
+        .setDateFormat(BuildConfig.DATE_FORMAT)
         .create()
 
     private val client =

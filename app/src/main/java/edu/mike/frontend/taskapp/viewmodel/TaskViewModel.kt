@@ -65,7 +65,7 @@ class TaskViewModel constructor(
     fun deleteTaskById(id: Long){
         job = CoroutineScope(Dispatchers.IO + exceptionHandler).launch {
             loading.postValue(true)
-            val response = taskRepository.deleteTaskById(id)
+            taskRepository.deleteTaskById(id)
         }
     }
 
@@ -73,6 +73,20 @@ class TaskViewModel constructor(
         job = CoroutineScope(Dispatchers.IO + exceptionHandler).launch {
             loading.postValue(true)
             val response = taskRepository.createTask(taskRequest)
+            withContext(Dispatchers.Main) {
+                if (response.isSuccessful) {
+                    loading.value = false
+                } else {
+                    onError("Error : ${response.message()}")
+                }
+            }
+        }
+    }
+
+    fun updateTask(taskRequest : TaskRequest){
+        job = CoroutineScope(Dispatchers.IO + exceptionHandler).launch {
+            loading.postValue(true)
+            val response = taskRepository.updateTask(taskRequest)
             withContext(Dispatchers.Main) {
                 if (response.isSuccessful) {
                     loading.value = false

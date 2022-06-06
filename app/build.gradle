@@ -16,6 +16,7 @@ android {
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
 
         // Custom properties
+        buildConfigField "String", "DATE_FORMAT", "\"dd/MM/yyyy\""
         buildConfigField "String", "API_KEY", "\"my_api_key\""
         //buildConfigField "String", "BASE_URL", "\"https://628ae68e667aea3a3e23e474.mockapi.io/api/\""
         buildConfigField "String", "BASE_URL", "\"https://task-app-v01.herokuapp.com/\""
@@ -46,9 +47,9 @@ dependencies {
     def lifecycle_version = "2.4.1"
     def nav_version = "2.4.2"
 
-    implementation 'androidx.core:core-ktx:1.7.0'
-    implementation 'androidx.appcompat:appcompat:1.4.1'
-    implementation 'com.google.android.material:material:1.6.0'
+    implementation 'androidx.core:core-ktx:1.8.0'
+    implementation 'androidx.appcompat:appcompat:1.4.2'
+    implementation 'com.google.android.material:material:1.6.1'
     implementation 'androidx.constraintlayout:constraintlayout:2.1.4'
     testImplementation 'junit:junit:4.13.2'
     androidTestImplementation 'androidx.test.ext:junit:1.1.3'

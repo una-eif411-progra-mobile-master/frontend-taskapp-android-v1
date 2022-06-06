@@ -14,73 +14,19 @@
         android:layout_width="match_parent"
         android:layout_height="168dp"
         android:layout_marginTop="20dp"
-        android:src="@drawable/task_new" />
+        android:src="@drawable/task_new_icon" />
 
-    <LinearLayout
+    <include
+        android:id="@+id/include_task_form"
+        layout="@layout/layout_task_form"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:orientation="vertical">
+        android:layout_height="wrap_content" />
 
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:orientation="vertical"
-            android:paddingTop="20dp">
-
-            <EditText
-                android:id="@+id/editTextTaskTitle"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:ems="10"
-                android:inputType="textShortMessage"
-                android:minHeight="48dp"
-                android:hint="@string/edit_task_title"
-                android:autofillHints="" />
-
-            <EditText
-                android:id="@+id/editTextTaskNotes"
-                android:layout_width="match_parent"
-                android:layout_height="150dp"
-                android:ems="10"
-                android:inputType="textLongMessage"
-                android:hint="@string/edit_task_note"
-                android:textAlignment="textStart"
-                android:autofillHints="" />
-
-            <TextView
-                android:id="@+id/textView"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginLeft="4dp"
-                android:layout_marginTop="10dp"
-                android:text="@string/task_priority"
-                android:textSize="18sp" />
-
-            <Spinner
-                android:id="@+id/spinner_priority"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:minHeight="60dp"
-                tools:ignore="SpeakableTextPresentCheck" />
-
-            <EditText
-                android:id="@+id/textDueDate"
-                android:hint="@string/edit_due_date"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:inputType="date"
-                android:focusable="false"
-                android:clickable="true"
-                android:maxLines="1" />
-
-            <Button
-                android:id="@+id/btnCreate"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="20dp"
-                android:text="@string/action_add" />
-
-        </LinearLayout>
-    </LinearLayout>
+    <Button
+        android:id="@+id/btnCreate"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="20dp"
+        android:text="@string/action_add" />
 
 </LinearLayout>

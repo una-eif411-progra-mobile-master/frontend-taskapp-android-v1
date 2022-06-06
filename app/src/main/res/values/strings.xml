@@ -8,6 +8,7 @@
     <string name="action_sign_in_short">Sign in</string>
     <string name="action_delete">Delete Task</string>
     <string name="action_add">Add Task</string>
+    <string name="action_update">Update Task</string>
     <string name="action_logout">Logout and close app</string>
     <string name="welcome">"Welcome to TaskApp!"</string>
     <string name="invalid_username">Not a valid username</string>
