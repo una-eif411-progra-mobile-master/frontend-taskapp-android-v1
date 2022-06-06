@@ -111,6 +111,12 @@ class LoginActivity : AppCompatActivity() {
             }
         }
 
+        loginViewModel.loginDataChanged(
+            LoginRequest(
+                username = binding.username.text.toString(),
+                password = binding.password.text.toString()
+            )
+        )
     }
 
     /**

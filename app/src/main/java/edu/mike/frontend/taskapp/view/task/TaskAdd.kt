@@ -37,7 +37,7 @@ class TaskAdd : Fragment() {
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
-    ): View? {
+    ): View {
 
         _binding = FragmentTaskAddBinding.inflate(inflater, container, false)
 
@@ -52,34 +52,36 @@ class TaskAdd : Fragment() {
         priorityViewModel.priorityList.observe(viewLifecycleOwner) {
             priorities = it
             // access the spinner
-            if (binding.spinnerPriority != null && priorities != null) {
-                val adapter: ArrayAdapter<Priority> = ArrayAdapter<Priority>(
-                    activity?.applicationContext!!,
-                    android.R.layout.simple_spinner_item,
-                    priorities
-                )
+            val adapter: ArrayAdapter<Priority> = ArrayAdapter<Priority>(
+                activity?.applicationContext!!,
+                android.R.layout.simple_spinner_item,
+                priorities
+            )
 
-                binding.spinnerPriority.adapter = adapter
+            binding.spinnerPriority.adapter = adapter
 
-                binding.spinnerPriority.onItemSelectedListener = object :
-                    AdapterView.OnItemSelectedListener {
-                    override fun onItemSelected(
-                        parent: AdapterView<*>,
-                        view: View, position: Int, id: Long
-                    ) {
-                        prioritySelected = parent.selectedItem as Priority
+
+            binding.spinnerPriority.onItemSelectedListener = object :
+                AdapterView.OnItemSelectedListener {
+                override fun onItemSelected(
+                    parent: AdapterView<*>?,
+                    view: View?, position: Int, id: Long
+                ) {
+                    if (parent != null) {
+                        if (parent.selectedItem != null) {
+                            prioritySelected = parent.selectedItem as Priority
+                        }
                     }
 
-                    override fun onNothingSelected(parent: AdapterView<*>) {
-                        // write code to perform some action
-                    }
+                }
+
+                override fun onNothingSelected(parent: AdapterView<*>) {
+                    // write code to perform some action
                 }
             }
         }
 
-        binding.textDueDate.setOnClickListener() {
-            val today = MaterialDatePicker.todayInUtcMilliseconds()
-
+        binding.textDueDate.setOnClickListener {
             val datePickerBuilder: MaterialDatePicker.Builder<Long> = MaterialDatePicker
                 .Builder
                 .datePicker()
@@ -101,16 +103,17 @@ class TaskAdd : Fragment() {
             }
         }
 
-        binding.btnCreate.setOnClickListener(){
+        binding.btnCreate.setOnClickListener {
             val formatter = SimpleDateFormat("dd/MM/yyyy")
             val text = binding.textDueDate.text.toString()
             val date = formatter.parse(text)
             taskViewModel.createTask(TaskRequest(
                 title = binding.editTextTaskTitle.text.toString(),
                 notes = binding.editTextTaskNotes.text.toString(),
-                dueDate = date,
+                dueDate = date!!,
                 priority = prioritySelected))
-            findNavController().navigate(R.id.taskNav)
+
+            findNavController().navigate(R.id.action_taskAddScreen_to_taskNav)
         }
 
         priorityViewModel.findAllPriorities()
