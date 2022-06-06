@@ -1,16 +1,25 @@
 package edu.mike.frontend.taskapp.service
-import edu.mike.frontend.taskapp.model.Task
+import edu.mike.frontend.taskapp.model.TaskRequest
+import edu.mike.frontend.taskapp.model.TaskResponse
 import retrofit2.Response
-import retrofit2.http.GET
-import retrofit2.http.Path
+import retrofit2.http.*
 
 interface TaskService {
 
     @GET("v1/tasks")
-    suspend fun getAllTasks() : Response<List<Task>>
+    suspend fun getAllTasks() : Response<List<TaskResponse>>
 
     @GET("v1/tasks/{id}")
-    suspend fun getTaskById(@Path("id") id: Long) : Response<Task>
+    suspend fun getTaskById(@Path("id") id: Long) : Response<TaskResponse>
+
+    @DELETE("v1/tasks/{id}")
+    suspend fun deleteTaskById(@Path("id") id: Long)
+
+    @POST("v1/tasks")
+    suspend fun createTask(@Body taskRequest: TaskRequest) : Response<TaskResponse>
+
+    @PUT("v1/tasks")
+    suspend fun updateTask(@Body taskRequest: TaskRequest) : Response<TaskResponse>
 
     /*
      * Function or any member of the class that can be called without having the instance of the

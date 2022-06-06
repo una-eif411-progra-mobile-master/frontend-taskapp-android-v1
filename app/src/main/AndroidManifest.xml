@@ -19,9 +19,11 @@
 
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
+
         </activity>
         <activity
-            android:name=".view.TaskActivity"/>
+            android:name=".view.MainActivity"
+            android:exported="false" />
     </application>
 
 </manifest>

@@ -26,8 +26,6 @@ class LoginActivity : AppCompatActivity() {
     // Definition of the binding variable
     private lateinit var binding: ActivityLoginBinding
     private lateinit var loginViewModel: LoginViewModel
-    private lateinit var sessionManager: SessionManager
-
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -35,8 +33,6 @@ class LoginActivity : AppCompatActivity() {
         // With View Binding
         binding = ActivityLoginBinding.inflate(layoutInflater)
         setContentView(binding.root)
-
-        sessionManager = SessionManager(this)
 
         // LoginViewModelFactory
         loginViewModel =
@@ -115,6 +111,12 @@ class LoginActivity : AppCompatActivity() {
             }
         }
 
+        loginViewModel.loginDataChanged(
+            LoginRequest(
+                username = binding.username.text.toString(),
+                password = binding.password.text.toString()
+            )
+        )
     }
 
     /**
@@ -125,7 +127,7 @@ class LoginActivity : AppCompatActivity() {
         val username = model.username
 
         // Initiate successful logged in experience
-        val intent = Intent(this, TaskActivity::class.java)
+        val intent = Intent(this, MainActivity::class.java)
         startActivity(intent)
 
         Toast.makeText(

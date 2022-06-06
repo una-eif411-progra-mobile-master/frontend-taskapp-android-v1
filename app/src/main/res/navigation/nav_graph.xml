@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/nav_graph"
+    app:startDestination="@id/homeScreen">
+
+    <include app:graph="@navigation/task" />
+    <fragment
+        android:id="@+id/aboutScreen"
+        android:name="edu.mike.frontend.taskapp.view.about.About"
+        android:label="@string/title_about"
+        tools:layout="@layout/fragment_about" />
+    <fragment
+        android:id="@+id/homeScreen"
+        android:name="edu.mike.frontend.taskapp.view.home.Home"
+        android:label="@string/title_home"
+        tools:layout="@layout/fragment_home" />
+    <fragment
+        android:id="@+id/taskAddScreen"
+        android:name="edu.mike.frontend.taskapp.view.task.TaskAdd"
+        android:label="@string/title_add_task"
+        tools:layout="@layout/fragment_task_add" >
+        <action
+            android:id="@+id/action_taskAddScreen_to_taskNav"
+            app:destination="@id/taskNav"
+            app:popUpTo="@+id/taskAddScreen"
+            app:popUpToInclusive="true"/>
+    </fragment>
+</navigation>
