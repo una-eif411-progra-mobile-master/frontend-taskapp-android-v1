@@ -70,7 +70,7 @@ class TaskUpdateFragment : Fragment() {
                             binding.includeTaskForm.editTextTaskTitle.setText(it.title)
                             binding.includeTaskForm.editTextTaskNotes.setText(it.notes)
                             binding.includeTaskForm.textDueDate.setText(formatter.format(it.dueDate))
-                            if (it.priority != null && ::spinnerAdapter.isInitialized) {
+                            if (::spinnerAdapter.isInitialized) {
                                 val spinnerPosition: Int = spinnerAdapter.getPosition(it.priority)
                                 binding.includeTaskForm.spinnerPriority.setSelection(spinnerPosition)
                             }

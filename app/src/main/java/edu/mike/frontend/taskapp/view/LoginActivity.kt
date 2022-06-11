@@ -63,9 +63,6 @@ class LoginActivity : AppCompatActivity() {
                 updateUiWithUser(loginResult.success)
             }
             setResult(Activity.RESULT_OK)
-
-            //Complete and destroy login activity once successful
-            finish()
         })
 
         binding.username.afterTextChanged {
@@ -126,6 +123,9 @@ class LoginActivity : AppCompatActivity() {
         val welcome = getString(R.string.welcome)
         val username = model.username
 
+        //Complete and destroy login activity once successful
+        finish()
+
         // Initiate successful logged in experience
         val intent = Intent(this, MainActivity::class.java)
         startActivity(intent)
@@ -141,7 +141,10 @@ class LoginActivity : AppCompatActivity() {
      * Unsuccessful login
      */
     private fun showLoginFailed(@StringRes errorString: Int) {
+
         Toast.makeText(applicationContext, errorString, Toast.LENGTH_SHORT).show()
+        // return login activity
+
     }
 }
 
