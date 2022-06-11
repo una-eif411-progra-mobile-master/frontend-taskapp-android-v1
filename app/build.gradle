@@ -3,6 +3,9 @@ plugins {
     id 'org.jetbrains.kotlin.android'
 }
 
+apply plugin: 'com.android.application'
+apply plugin: 'com.google.gms.google-services'
+
 android {
     compileSdk 32
 
@@ -88,5 +91,9 @@ dependencies {
 
     // Date Picker
     implementation 'com.wdullaer:materialdatetimepicker:4.2.3'
+
+    // Firebase App Distribution
+    implementation platform('com.google.firebase:firebase-bom:30.1.0')
+    implementation 'com.google.firebase:firebase-analytics-ktx'
 
 }
