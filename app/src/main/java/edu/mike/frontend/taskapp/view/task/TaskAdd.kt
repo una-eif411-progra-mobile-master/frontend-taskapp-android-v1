@@ -20,7 +20,9 @@ import edu.mike.frontend.taskapp.viewmodel.PriorityViewModelFactory
 import edu.mike.frontend.taskapp.viewmodel.TaskViewModel
 import edu.mike.frontend.taskapp.viewmodel.TaskViewModelFactory
 import java.text.SimpleDateFormat
-import java.util.*
+import java.util.Calendar
+import java.util.Locale
+import java.util.TimeZone
 
 class TaskAdd : Fragment() {
 
@@ -107,7 +109,7 @@ class TaskAdd : Fragment() {
         }
 
         binding.btnCreate.setOnClickListener {
-            val formatter = SimpleDateFormat(BuildConfig.DATE_FORMAT)
+            val formatter = SimpleDateFormat(BuildConfig.DATE_FORMAT, Locale.getDefault())
             taskViewModel.createTask(
                 TaskRequest(
                     title = binding.includeTaskForm.editTextTaskTitle.text.toString(),

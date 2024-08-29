@@ -20,7 +20,7 @@ object ServiceBuilder {
         .create()
 
     // If you need to check your request change the Level
-    var loggingInterceptor: HttpLoggingInterceptor = HttpLoggingInterceptor().setLevel(
+    private var loggingInterceptor: HttpLoggingInterceptor = HttpLoggingInterceptor().setLevel(
         HttpLoggingInterceptor.Level.NONE
     )
 
